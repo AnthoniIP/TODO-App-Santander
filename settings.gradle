@@ -1,0 +1,2 @@
+rootProject.name = "Lembretes e tarefas"
+include ':app'
