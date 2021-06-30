@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ipsoft.lembretesetarefas.databinding.FragmentNewTaskBinding
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
+import ipsoft.lembretesetarefas.utils.extensions.format
+import ipsoft.lembretesetarefas.utils.extensions.text
+import java.util.*
 
 
 class NewTaskFragment : Fragment() {
@@ -25,6 +29,7 @@ class NewTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setScreen()
+        setListeners()
     }
 
 
@@ -32,6 +37,36 @@ class NewTaskFragment : Fragment() {
 
         binding.toolbarBackButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+    }
+
+    private fun setListeners() {
+
+        binding.edtTitle.setOnClickListener {
+
+        }
+        binding.edtDesc.setOnClickListener {
+
+        }
+        binding.tilDate.editText?.setOnClickListener {
+            val datePicker = MaterialDatePicker.Builder.datePicker().build()
+            val timeZone = TimeZone.getDefault()
+            val offset = timeZone.getOffset(Date().time) * -1
+            datePicker.addOnPositiveButtonClickListener {
+                binding.tilDate.text = Date(it + offset).format()
+
+            }
+            activity?.supportFragmentManager?.let { supportFragmentManager ->
+                datePicker.show(
+                    supportFragmentManager,
+                    "DATE_PICKER_TAG"
+                )
+
+            }
+        }
+        binding.edtTime.setOnClickListener {
+
         }
 
     }
