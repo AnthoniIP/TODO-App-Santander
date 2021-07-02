@@ -14,4 +14,5 @@ class TaskRepositoryImpl(context: Context) : TaskRepository {
 
     override suspend fun loadById(id: Int) = db.loadById(id)
     override suspend fun update(task: Task) = db.update(task)
+    override suspend fun delete(task: Task) = db.delete(task)
 }

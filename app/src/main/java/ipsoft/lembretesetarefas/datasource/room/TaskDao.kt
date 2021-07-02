@@ -14,11 +14,11 @@ interface TaskDao {
 
 
     @Insert
-    fun insertAll(user: Task)
+    fun insertAll(task: Task)
 
     @Delete
-    fun delete(user: Task)
+    fun delete(task: Task)
 
     @Update
-    fun update(user: Task)
+    fun update(task: Task)
 }

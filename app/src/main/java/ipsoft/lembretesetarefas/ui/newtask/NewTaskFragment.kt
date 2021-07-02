@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import ipsoft.lembretesetarefas.R
 import ipsoft.lembretesetarefas.datasource.model.Task
 import ipsoft.lembretesetarefas.utils.extensions.format
 import ipsoft.lembretesetarefas.utils.extensions.text
@@ -40,6 +41,9 @@ class NewTaskFragment : Fragment() {
 
         if (args.taskId >= 0) {
             configFields(newTaskViewModel.getTaskById(args.taskId))
+            binding.toolbarBackButton.setTitle(R.string.task_edit)
+            binding.btnDeleteTask.visibility = View.VISIBLE
+            binding.btnCreateTask.visibility = View.GONE
         }
         setScreen()
         setListeners()
@@ -112,6 +116,9 @@ class NewTaskFragment : Fragment() {
                 }
             }
         }
+        binding.btnDeleteTask.setOnClickListener {
+            deleteTask()
+        }
 
 
     }
@@ -142,6 +149,21 @@ class NewTaskFragment : Fragment() {
 
         newTaskViewModel.addTask(task)
         Toast.makeText(requireContext(), "Tarefa salva com sucesso", Toast.LENGTH_SHORT).show()
+        findNavController().navigateUp()
+
+    }
+
+    private fun deleteTask() {
+
+        val task = Task(
+            id = args.taskId,
+            title = binding.edtTitle.text.toString(),
+            description = binding.edtDesc.text.toString(),
+            date = binding.edtDate.text.toString(),
+            time = binding.edtTime.text.toString()
+        )
+        newTaskViewModel.deleteTask(task)
+        Toast.makeText(requireContext(), "Tarefa deletada com sucesso", Toast.LENGTH_SHORT).show()
         findNavController().navigateUp()
 
     }
